@@ -45,7 +45,6 @@ int main(int argc, char* args[])
                 if (state == 0 && event.type == SDL_MOUSEBUTTONDOWN) {
                     moveable = event.button.button == SDL_BUTTON_LEFT;
                     SDL_GetMouseState(&newPLanetX, &newPLanetY);
-                    std::cout << "deltaTime: " << deltaTime << " number of planets: "<< planetCollection.size()<< event.button.button <<"\n";
                     state = 1;
                 }
                 else if (state == 1) {
@@ -61,6 +60,7 @@ int main(int argc, char* args[])
                             planetCollection.push_back(planet);
                             newPLanetRadius = 0;
                             state = 0;
+                            std::cout << "deltaTime: " << deltaTime << " number of planets: " << planetCollection.size()<< "\n";
                         }
                         else {
                             state = 2;
@@ -76,6 +76,7 @@ int main(int argc, char* args[])
                         planetCollection.push_back(planet);
                         newPLanetRadius = 0;
                         state = 0;
+                        std::cout << "deltaTime: " << deltaTime << " number of planets: " << planetCollection.size() << "\n";
                     }
                 }
             }
@@ -107,9 +108,14 @@ int main(int argc, char* args[])
             SDL_RenderPresent(renderer);
         }
     }
-
+    for (auto p : planetCollection)
+    {
+        delete p;
+    }
+    planetCollection.clear();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    std::cout << "Clean" << std::endl;
     return 0;
 }
